@@ -20,10 +20,10 @@ const styles = StyleSheet.create({
     inputText: {
       marginHorizontal: 10,
       paddingHorizontal: 15,
-      borderColor: 'blue',
       fontSize: 20,
       borderRadius: 10,
       marginBottom: 6,
+      borderWidth:1
     },
   });
 export default Password;
