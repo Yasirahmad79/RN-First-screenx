@@ -23,7 +23,7 @@ const DisplayResult = ({display, name, email, password}) => {
               </Text>
             </View>
           ) : (
-            ''
+            null
           )}
         </ImageBackground>
       </View>
