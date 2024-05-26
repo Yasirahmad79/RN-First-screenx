@@ -1,14 +1,14 @@
 
 import {View, StyleSheet, TextInput} from 'react-native';
 
-const Email = ({email, setEmail}) => {
+const PostBody = ({bodyText, setBodyText}) => {
   return (
     <View>
       <TextInput
           style={styles.inputText}
-          placeholder="Enter Your Email..."
-          value={email}
-          onChangeText={text => setEmail(text)}
+          placeholder="Enter Post Body..."
+          value={bodyText}
+          onChangeText={text => setBodyText(text)}
         />
     </View>
   );
@@ -25,4 +25,4 @@ const styles = StyleSheet.create({
       marginBottom: 6,
     },
   });
-export default Email;
+export default PostBody;

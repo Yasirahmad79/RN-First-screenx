@@ -1,54 +1,56 @@
-import {useState} from 'react';
-import {View, ScrollView, ActivityIndicator, StatusBar} from 'react-native';
+import { useState} from 'react';
+import {View, ScrollView, StatusBar} from 'react-native';
+import MainTitle from '../components/MainTitle';
 import Title from '../components/Title';
-import Name from '../components/Name';
-import Email from '../components/Email';
-import Password from '../components/Password';
+import PostBody from '../components/PostBody';
 import Buttons from '../components/Buttons';
-import DisplayResult from '../components/DisplayResult';
 import SkillsData from '../components/SkillsData';
+import { useNavigation } from '@react-navigation/native';
 
 const HomeScreen =() => {
-    const [display, setDisplay] = useState(false);
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [show, setShow] = useState(false);
+    const [title, setTitle] = useState('');
+    const [bodyText, setBodyText] = useState('');
     const [selectedRadio, setSelectedRadio] = useState(1);
+    const navigation = useNavigation();
   
     const clearInputs = () => {
-      setDisplay(false);
-      setName('');
-      setEmail('');
-      setPassword('');
+      setTitle('');
+      setBodyText('');
     };
-    const addData = () => {
-      setDisplay(true);
-      setShow(true);
-      setTimeout(() => {
-        setShow(false);
-      }, 800);
+    const addData = async () => {
+      const url = 'http://10.0.2.2:3000/users';
+      try {
+        let result = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ title, body: bodyText })
+        });
+        result = await result.json();
+        if (result) {
+          clearInputs();
+          navigation.navigate('Posts');
+          console.warn("Data added");
+        }
+      } catch (error) {
+        console.error("Error adding data:", error);
+      }
     };
+    
+    
     return (
       <ScrollView>
         <StatusBar backgroundColor={'purple'} barStyle={'light-content'} />
-        {show ? <ActivityIndicator size={60} color={'skyblue'} /> : null}
-        <Title />
+        <MainTitle />
         <View>
-          <Name name={name} setName={setName} />
-          <Email email={email} setEmail={setEmail} />
-          <Password password={password} setPassword={setPassword} />
+          <Title title={title} setTitle={setTitle} />
+          <PostBody bodyText={bodyText} setBodyText={setBodyText} />
         </View>
         <Buttons clearInputs={clearInputs} addData={addData} />
         <SkillsData
           selectedRadio={selectedRadio}
           setSelectedRadio={setSelectedRadio}
-        />
-        <DisplayResult
-          display={display}
-          name={name}
-          email={email}
-          password={password}
         />
       </ScrollView>
     );

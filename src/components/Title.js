@@ -1,22 +1,29 @@
 
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, TextInput} from 'react-native';
 
-const Title = () => {
+const Title = ({title, setTitle}) => {
+    
   return (
     <View>
-      <Text style={styles.todoTitle}>Simple Input Form</Text>
+      <TextInput
+          style={styles.inputText}
+          placeholder="Enter Post Title..."
+          value={title}
+          onChangeText={text => setTitle(text)}
+        />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-    todoTitle: {
-      textAlign: 'center',
-      margin: 20,
-      fontSize: 40,
-      color: 'white',
-      backgroundColor: 'grey',
+   
+    inputText: {
+      marginHorizontal: 10,
+      paddingHorizontal: 15,
+      fontSize: 20,
       borderRadius: 10,
-    }
+      marginBottom: 6,
+      borderWidth:1
+    },
   });
 export default Title;
